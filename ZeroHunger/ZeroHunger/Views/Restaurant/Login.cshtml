@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+@Html.ValidationSummary()
+
+<form method="post">
+    <fieldset>
+        <legend>Login</legend>
+        <input value="@ViewBag.Username" class="form-control" type="text" name="username" placeholder="Username" />
+        <span class="text-danger">@Html.ValidationMessage("username")</span>
+        <input value="@ViewBag.Password" class="form-control" type="password" name="password" placeholder="Password" />
+        <span class="text-danger">@Html.ValidationMessage("password")</span>
+        <input type="submit" class="btn-danger" />
+        <a href="/Restaurant/SignUp">No account? Click here to sign up</a>
+
+
+    </fieldset>
+</form>

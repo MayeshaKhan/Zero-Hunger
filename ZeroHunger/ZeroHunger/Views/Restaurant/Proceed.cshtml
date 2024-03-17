@@ -1,0 +1,63 @@
+﻿
+@model ZeroHunger.DTOs.ProcessRequestDTO
+
+
+
+@{
+    ViewBag.Title = "Proceed";
+
+}
+
+@if (TempData["msg"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["msg"]
+    </div>
+}
+
+@{
+    string getExpiry()
+    {
+        return (Model != null ? Model.Expiry.ToString("yyyy-MM-dd") : DateTime.Now.ToString("yyyy-MM-dd"));
+    }
+}
+
+<h2>Proceed to request</h2>
+
+@if (Session["foodlist"] == null)
+{
+    <h1>No food is added yet</h1>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                Type
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in (List<ZeroHunger.DTOs.FoodDTO>)Session["foodlist"])
+        {
+            <tr>
+                <td>
+                    @item.Type
+                </td>
+                <td>
+                    @item.Quantity
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+<form method="post">
+    <h3>Expire Date</h3>
+    <input value="@getExpiry()" class="form-control" type="date" name="expire_datetime" />
+    <span class="text-danger">@Html.ValidationMessage("expire_datetime")</span>
+    <input type="submit" class="btn-danger" />
+</form>

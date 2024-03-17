@@ -1,0 +1,49 @@
+﻿@model IEnumerable<ZeroHunger.DTOs.FoodDTO>
+
+@{
+    ViewBag.Title = "RequestedFood";
+}
+
+@if (TempData["msg"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["msg"]
+    </div>
+}
+<h2>Requested Food</h2>
+@if (Model == null)
+{
+    <h1>No food is added yet</h1>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                Type
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Type
+                </td>
+                <td>
+                    @item.Quantity
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+@Html.ActionLink("Add more Food", "AddFood", "Restaurant", new { area = "" }, new { @class = "btn btn-success" })
+@Html.ActionLink("Proceed", "Proceed", "Restaurant", new { area = "" }, new { @class = "btn btn-success" })
+
+
+<a href="/Restaurant/Index" class="btn btn-primary">Go to Index</a>

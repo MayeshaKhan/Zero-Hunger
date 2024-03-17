@@ -1,0 +1,96 @@
+﻿@model ZeroHunger.EF.Request
+@{
+    ViewBag.Title = "RequestDetails";
+
+}
+
+@if (TempData["msg"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["msg"]
+    </div>
+}
+<h2>requestdetails</h2>
+
+<ul class="list-group list-group">
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                ID
+            </div>
+            @Model.Id
+        </div>
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Status
+            </div>
+            @Model.Status
+        </div>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Order datetime
+            </div>
+            @Model.OrderTime.ToString();
+        </div>
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Expire Date time
+            </div>
+            @Model.Expiry.ToString();
+        </div>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Requested by
+            </div>
+            @Model.Restaurant.Username
+        </div>
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Total quantity
+            </div>
+            @Model.Quantity
+        </div>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Assigned Employee
+            </div>
+            @(Model.Employee != null ? Model.Employee.Username : "Not assigned")
+        </div>
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Assigned by
+            </div>
+            @(Model.Admin != null ? Model.Admin.Username : "Not assigned")
+        </div>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Food list:
+            </div>
+            <table class="table table-bordered">
+                <tr>
+
+                    <th>Type</th>
+                    <th>Quantity</th>
+                </tr>
+                @foreach (var item in Model.Foods.ToList())
+                {
+                    <tr>
+
+                        <td>@item.Type</td>
+                        <td>@item.Quantity</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </li>
+</ul>
+
+<a href="/Restaurant/Index" class="btn btn-primary">Go To Index</a>

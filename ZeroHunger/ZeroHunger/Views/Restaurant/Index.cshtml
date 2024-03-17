@@ -1,0 +1,49 @@
+﻿@model List<ZeroHunger.EF.Request>
+@{
+    ViewBag.Title = "Index";
+
+}
+
+@if (TempData["msg"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["msg"]
+    </div>
+}
+<h2>Dashboard</h2>
+<a href="/Restaurant/Logout" class="btn btn-primary">Log Out</a>
+
+<a href="Restaurant/AddFood" class="btn btn-primary">New Request</a>
+<br />
+<h3>All Requests:</h3>
+@{
+    if (Model.Count == 0)
+    {
+        <h1>No Request has been done</h1>
+    }
+    else
+    {
+        <table class="table table-bordered">
+            <tr>
+                <th class="link">ID</th>
+                <th>Order Date</th>
+                <th>Expiry Date</th>
+                <th>Total Quantity</th>
+                <th>Status</th>
+            </tr>
+            @foreach (var request in Model)
+            {
+                <tr>
+                    <th>@request.Id</th>
+                    <th>@request.OrderTime</th>
+                    <th>@request.Expiry</th>
+                    <th>@request.Quantity</th>
+                    <th>@request.Status</th>
+                    <th><a href="/restaurant/requestdetails/@request.Id" class="btn btn-success">Details</a></th>
+                </tr>
+            }
+        </table>
+    }
+}
+
+

@@ -1,0 +1,118 @@
+﻿
+
+
+@model ZeroHunger.EF.Request
+
+@{
+    ViewBag.Title = "RequestDetails";
+  
+}
+
+@if (TempData["msg"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["msg"]
+    </div>
+}
+<h2>requestdetails</h2>
+
+<ul class="list-group list-group">
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                ID
+            </div>
+            @Model.Id
+        </div>
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Status
+            </div>
+            @Model.Status
+        </div>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Order Date & Time
+            </div>
+            @Model.OrderTime.ToString()
+        </div>
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Expiry Date time
+            </div>
+            @Model.Expiry.ToString()
+        </div>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Requested by
+            </div>
+            
+                @Model.Restaurant.Username
+            
+        </div>
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Total quantity
+            </div>
+            @Model.Quantity
+        </div>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Assigned Employee
+            </div>
+            @(Model.Employee != null ? Model.Employee.Username : "Not assigned")
+            
+            @if (!Model.Status.Equals("collected"))
+            {
+               
+                <form method="post">
+                    <input type="hidden" value="@Model.Id.ToString()" name="id" />
+                   @(Model.Employee != null ? Model.Employee.Id.ToString() : "Not assigned")
+                    <select name="emp_id">
+                        <option disabled @(Model.Employee == null ? "selected" : "")>None</option>
+                        @foreach (ZeroHunger.EF.Employee e in ViewBag.empList)
+                        {
+                            <option value="@e.Id" @(Model.Employee != null && Model.Employee.Id.Equals(e.Id) ? "selected" : "")>@e.Name</option>
+                        }
+                    </select>
+                    <input type="submit" value="Assign or Change" class="btn btn-danger" />
+                </form>
+            }
+        </div>
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Assigned by
+            </div>
+            @(Model.Admin != null ? Model.Admin.Username : "Not assigned")
+        </div>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">
+                Food list:
+            </div>
+            <table class="table table-bordered">
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Quantity</th>
+                </tr>
+                @foreach (var item in Model.Foods.ToList())
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Type</td>
+                        <td>@item.Quantity</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </li>
+</ul>
+<a href="/Admin/Index" class="btn btn-success">Go to Index</a>
